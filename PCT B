@@ -1,0 +1,2 @@
+%sql
+select * from edap_goldplus.d_new_bu limit 10
