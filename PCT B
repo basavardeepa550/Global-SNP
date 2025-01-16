@@ -95,3 +95,27 @@ M0JFMDUxMjE4MjkyNjgwMjY4MDE=	3BE0512182	9268026801	NURFN,HK,CAPL 200MG 2X6S SAM	
 M0JPMDQxMDg1MDkyNjgwMjY4MDE=	3BO0410850	9268026801	STPSL,HK,VC 1X6 LOZ (NEW)	EA	null	null	null	null	null	null	null	NA	Not Assigned	null	null	null	null	0	IC	null	0	null	0	0	null	0	0	0	null	0	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	NO	null	null	null	null	null	GBP	26859007	null	null	0	2023-07-18 03:21	null	null	null	null	null	null	N	N	null	null	null	SN	Obsolete	576	576	5,759,424	Workday	N	N	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	kinaxis	2023-07-18T13:16:52.000+00:00	958790615350461_2022-10-19_03:02:47	894143943330042_2023-07-18_13:16:47		
 M0JPMDgxMjMxNjkyNjgwMjY4MDE=	3BO0812316	9268026801	STPSL,HK,ES 24'S BOX	EA	null	null	null	null	null	null	null	NA	Not Assigned	null	null	null	null	0	IC	null	0	null	0	0	null	0	0	0	null	0	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	NO	null	null	null	null	null	GBP	26859007	null	null	0	2023-07-18 03:21	null	null	null	null	null	null	N	N	null	null	null	SN	Obsolete	20,160	144	1,439,856	Workday	N	N	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	kinaxis	2023-07-18T13:16:52.000+00:00	958790615350461_2022-10-19_03:02:47	894143943330042_2023-07-18_13:16:47		
 M0JPMTAxMjQ5MzkyNjgwMjY4MDE=	3BO1012493	9268026801	STPSL,HK,MENTHOL 1X6S	EA	null	null	null	null	null	null	null	NA	Not Assigned	null	null	null	null	0	IC	null	0	null	0	0	null	0	0	0	null	0	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	NO	null	null	null	null	null	GBP	26859007	null	null	0	2023-07-18 03:21	null	null	null	null	null	null	N	N	null	null	null	SN	Obsolete	28,800	576	5,759,424	Workday	N	N	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	null	kinaxis	2023-07-18T13:16:52.000+00:00	958790615350461_2022-10-19_03:02:47	894143943330042_2023-07-18_13:16:47		
+
+
+# Register both DataFrames as temporary views
+df.createOrReplaceTempView("product_dim")
+sa_df.createOrReplaceTempView("sa_product_dim")
+
+# Perform the join
+joined_df = spark.sql("""
+    SELECT 
+        p.*, 
+        sa.*
+    FROM 
+        product_dim p
+    JOIN 
+        sa_product_dim sa
+    ON 
+        p.brand = sa.brand AND 
+        p.brand_desc = sa.brand_desc AND 
+        p.brand_code = sa.brand_code AND 
+        p.brand_name = sa.brand_name
+""")
+
+# Display the joined DataFrame
+display(joined_df)
