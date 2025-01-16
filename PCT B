@@ -144,3 +144,19 @@ Product_Sku_Code	Product_Sku_Desc	Segment_Code	Segment_Description	Brand_Code	BR
 3057298	DTT,IN,LHW SKC 200ML+DLS185BSI	XH	Health- Skin Var Liq H Soap	1292	Dettol	LIR	Health	Health	Dettol	Dettol		Health- Skin Var Liq H Soap
 3071626	FINSH,ZA, AIO+REG, 4X56	PE	Max in One tabs (doy)	1337	Finish	TAB	Hygiene & Home	Hygiene & Home	Finish	Finish		Max in One tabs (doy)
 3196210	LABL,NAHEA,CA,INNER UPC CHI	AM	Other Household	1999	Not Applicable - Health	null	Health	Health	Not Applicable - Health	Not Applicable - Health		Other Household
+
+
+
+SELECT
+    p.*,
+    sa.*
+FROM
+    edap_goldplus.product_dim p
+JOIN
+    edap_sa.sa_product_dim sa
+ON
+    p.Product_Sku_Code = sa.product_id
+    AND p.Brand_Code = sa.brand
+    AND p.BRAND_NAME = sa.brand_desc
+    AND p.Segment_Code = sa.segment
+    AND p.Segment_Description = sa.segment_desc
